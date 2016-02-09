@@ -22,12 +22,14 @@ namespace PeopleViewer
 
         private void ConfigureContainer()
         {
-
+            Container = new StandardKernel();
+            Container.Bind<IPersonRepository>().To<CSVRepository>()
+                .InSingletonScope();
         }
 
         private void ComposeObjects()
         {
-
+            Application.Current.MainWindow = Container.Get<MainWindow>();
         }
     }
 }
