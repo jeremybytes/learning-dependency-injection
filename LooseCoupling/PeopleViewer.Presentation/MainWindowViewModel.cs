@@ -9,7 +9,7 @@ namespace PeopleViewer.Presentation
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        protected ServiceRepository Repository;
+        protected IPersonRepository Repository;
 
         private IEnumerable<Person> _people;
         public IEnumerable<Person> People
@@ -24,9 +24,9 @@ namespace PeopleViewer.Presentation
             }
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IPersonRepository repository)
         {
-            Repository = new ServiceRepository();
+            Repository = repository;
         }
 
         #region RefreshCommand Standard Stuff
