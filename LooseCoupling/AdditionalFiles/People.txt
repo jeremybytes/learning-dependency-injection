@@ -1,0 +1,8 @@
+John,Koenig,1975/10/17,6
+Dylan,Hunt,2000/10/02,8
+John,Crichton,1999/03/19,7
+Dave,Lister,1988/02/15,9
+John,Sheridan,1994/01/26,6
+Dante,Montana,2000/11/01,5
+Isaac,Gampu,1977/09/10,4
+Jeremy,Awesome,1971/05/03,10
