@@ -11,7 +11,7 @@ namespace PeopleViewer
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var repository = new ServiceRepository();
+            var repository = new CSVRepository();
             var viewModel = new MainWindowViewModel(repository);
             Application.Current.MainWindow = new MainWindow(viewModel);
             Application.Current.MainWindow.Show();
