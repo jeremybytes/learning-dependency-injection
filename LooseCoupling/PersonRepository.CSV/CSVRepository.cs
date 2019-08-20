@@ -1,88 +1,62 @@
 ﻿using Common;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
+using System.Linq;
 
 namespace PersonRepository.CSV
 {
     public class CSVRepository : IPersonRepository
     {
-        string path;
+        public ICSVFileLoader FileLoader { get; set; }
 
         public CSVRepository()
         {
-            var filename = ConfigurationManager.AppSettings["CSVFileName"];
-            path = AppDomain.CurrentDomain.BaseDirectory + filename;
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "People.txt";
+            FileLoader = new CSVFileLoader(filePath);
         }
 
         public IEnumerable<Person> GetPeople()
         {
-            var people = new List<Person>();
-
-            if (File.Exists(path))
-            {
-                using (var sr = new StreamReader(path))
-                {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        var elems = line.Split(',');
-                        var per = new Person()
-                        {
-                            FirstName = elems[0],
-                            LastName = elems[1],
-                            StartDate = DateTime.Parse(elems[2]),
-                            Rating = Int32.Parse(elems[3])
-                        };
-                        people.Add(per);
-                    }
-                }
-            }
+            var fileData = FileLoader.LoadFile();
+            var people = ParseString(fileData);
             return people;
         }
 
-        public Person GetPerson(string lastName)
+        public Person GetPerson(int id)
         {
-            Person selPerson = new Person();
-            if (File.Exists(path))
+            var people = GetPeople();
+            return people?.FirstOrDefault(p => p.Id == id);
+        }
+
+        private List<Person> ParseString(string csvData)
+        {
+            var people = new List<Person>();
+
+            var lines = csvData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            foreach (string line in lines)
             {
-                var sr = new StreamReader(path);
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                try
                 {
                     var elems = line.Split(',');
-                    if (elems[1].ToLower() == lastName.ToLower())
+                    var per = new Person()
                     {
-                        selPerson.FirstName = elems[0];
-                        selPerson.LastName = elems[1];
-                        selPerson.StartDate = DateTime.Parse(elems[2]);
-                        selPerson.Rating = Int32.Parse(elems[3]);
-                    }
+                        Id = Int32.Parse(elems[0]),
+                        GivenName = elems[1],
+                        FamilyName = elems[2],
+                        StartDate = DateTime.Parse(elems[3]),
+                        Rating = Int32.Parse(elems[4]),
+                        FormatString = elems[5],
+                    };
+                    people.Add(per);
+                }
+                catch (Exception)
+                {
+                    // Skip the bad record, log it, and move to the next record
+                    // log.write("Unable to parse record", per);
                 }
             }
-
-            return selPerson;
-        }
-
-        public void AddPerson(Person newPerson)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePerson(string lastName, Person updatedPerson)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeletePerson(string lastName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePeople(IEnumerable<Person> updatedPeople)
-        {
-            throw new NotImplementedException();
+            return people;
         }
     }
 }

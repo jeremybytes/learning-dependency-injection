@@ -1,0 +1,13 @@
+{
+  "components": [
+    {
+      "type": "PersonRepository.Service.ServiceRepository, PersonRepository.Service",
+      "services": [
+        {
+          "type": "Common.IPersonRepository, Common"
+        }
+      ],
+      "injectionProperties": false
+    }
+  ]
+}

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{802A0B7B-18A0-407F-A24C-B547681176EE}</ProjectGuid>
+    <ProjectGuid>{E3FC00AA-A9E7-4E6F-9DDC-5E7C1D21E53A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PeopleViewer</RootNamespace>
     <AssemblyName>PeopleViewer</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -87,46 +90,40 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{19312b0d-c687-40ab-8a38-0b4c43c02e98}</Project>
+      <Project>{1b82b92c-6693-4922-ae9a-9cacb5c4e24f}</Project>
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PeopleViewer.Presentation\PeopleViewer.Presentation.csproj">
-      <Project>{3cfea4ca-4925-46f1-9789-cc4b459045d2}</Project>
+      <Project>{12581640-1ecc-44d0-9a6b-66b28fffe65f}</Project>
       <Name>PeopleViewer.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\PersonRepository.Caching\PersonRepository.Caching.csproj">
-      <Project>{4264d234-eae9-40e1-879b-3c7911c47e65}</Project>
+      <Project>{1a21a62f-0a90-4f94-88aa-341c730f54a7}</Project>
       <Name>PersonRepository.Caching</Name>
     </ProjectReference>
     <ProjectReference Include="..\PersonRepository.CSV\PersonRepository.CSV.csproj">
-      <Project>{afbe51ac-25fe-4147-bda1-75dcaa005ace}</Project>
+      <Project>{1174395b-80cf-4109-b049-e6f041c4b9a9}</Project>
       <Name>PersonRepository.CSV</Name>
     </ProjectReference>
     <ProjectReference Include="..\PersonRepository.Service\PersonRepository.Service.csproj">
-      <Project>{fb2deb9e-5895-431d-a82b-e19e3e52a80b}</Project>
+      <Project>{f0db1627-f716-44af-b545-e4a649edd771}</Project>
       <Name>PersonRepository.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)\AdditionalFiles\*.*" "$(TargetDir)" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(SolutionDir)AdditionalFiles\*.*" "$(TargetDir)" /Y
+</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

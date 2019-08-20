@@ -1,12 +1,11 @@
-﻿using PeopleViewer.Presentation;
+﻿using Common;
+using Ninject;
 using PersonRepository.Caching;
 using PersonRepository.CSV;
 using PersonRepository.Service;
 using System.Windows;
-using Ninject;
-using Common;
 
-namespace PeopleViewer
+namespace PeopleViewer.Ninject
 {
     public partial class App : Application
     {
@@ -23,8 +22,10 @@ namespace PeopleViewer
         private void ConfigureContainer()
         {
             Container = new StandardKernel();
-            Container.Bind<IPersonRepository>().To<CSVRepository>()
-                .InSingletonScope();
+            Container.Bind<IPersonRepository>().To<CachingRepository>()
+                .InSingletonScope()
+                .WithConstructorArgument<IPersonRepository>(
+                    Container.Get<ServiceRepository>());
         }
 
         private void ComposeObjects()

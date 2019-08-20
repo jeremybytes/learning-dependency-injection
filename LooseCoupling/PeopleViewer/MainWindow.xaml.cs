@@ -5,10 +5,23 @@ namespace PeopleViewer
 {
     public partial class MainWindow : Window
     {
-        public MainWindow(MainWindowViewModel viewModel)
+        PeopleViewModel ViewModel { get; set; }
+
+        public MainWindow(PeopleViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = viewModel;
+            ViewModel = viewModel;
+            DataContext = ViewModel;
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RefreshPeople();
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ClearPeople();
         }
     }
 }

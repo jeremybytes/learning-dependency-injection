@@ -1,9 +1,8 @@
 ﻿using Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PersonRepository.Caching
 {
@@ -41,7 +40,7 @@ namespace PersonRepository.Caching
                 {
                     _cachedItems = new List<Person>()
                     {
-                        new Person(){ FirstName="No Data Available", LastName = string.Empty, Rating = 0, StartDate = DateTime.Today},
+                        new Person(){ GivenName = "No Data Available", FamilyName = string.Empty, Rating = 0, StartDate = DateTime.Today},
                     };
                 }
             }
@@ -58,34 +57,10 @@ namespace PersonRepository.Caching
             return _cachedItems;
         }
 
-        public Person GetPerson(string lastName)
+        public Person GetPerson(int id)
         {
             ValidateCache();
-            return _cachedItems.FirstOrDefault(p => p.LastName == lastName);
-        }
-
-        public void AddPerson(Person newPerson)
-        {
-            _wrappedRepository.AddPerson(newPerson);
-            InvalidateCache();
-        }
-
-        public void UpdatePerson(string lastName, Person updatedPerson)
-        {
-            _wrappedRepository.UpdatePerson(lastName, updatedPerson);
-            InvalidateCache();
-        }
-
-        public void DeletePerson(string lastName)
-        {
-            _wrappedRepository.DeletePerson(lastName);
-            InvalidateCache();
-        }
-
-        public void UpdatePeople(IEnumerable<Person> updatedPeople)
-        {
-            _wrappedRepository.UpdatePeople(updatedPeople);
-            InvalidateCache();
+            return _cachedItems.FirstOrDefault(p => p.Id == id);
         }
     }
 }

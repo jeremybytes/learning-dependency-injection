@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace PeopleViewer
+namespace PeopleViewer.Ninject
 {
     public class DecadeConverter : IValueConverter
     {

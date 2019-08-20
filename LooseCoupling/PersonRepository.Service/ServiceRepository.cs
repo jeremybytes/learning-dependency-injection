@@ -1,57 +1,33 @@
 ﻿using Common;
-using PersonRepository.Service.MyService;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 
 namespace PersonRepository.Service
 {
     public class ServiceRepository : IPersonRepository
     {
-        private IPersonService _serviceProxy;
-        public IPersonService ServiceProxy
+        WebClient client;
+        string baseUri;
+
+        public ServiceRepository()
         {
-            get
-            {
-                if (_serviceProxy == null)
-                    _serviceProxy = new PersonServiceClient();
-                return _serviceProxy;
-            }
-            set
-            {
-                if (_serviceProxy == value)
-                    return;
-                _serviceProxy = value;
-            }
+            client = new WebClient();
+            baseUri = "http://localhost:9874/";
         }
 
         public IEnumerable<Person> GetPeople()
         {
-            return ServiceProxy.GetPeople();
+            var address = $"{baseUri}api/people";
+            string reply = client.DownloadString(address);
+            return JsonConvert.DeserializeObject<List<Person>>(reply);
         }
 
-        public Person GetPerson(string lastName)
+        public Person GetPerson(int id)
         {
-            return ServiceProxy.GetPerson(lastName);
-        }
-
-        public void AddPerson(Person newPerson)
-        {
-            ServiceProxy.AddPerson(newPerson);
-        }
-
-        public void UpdatePerson(string lastName, Person updatedPerson)
-        {
-            ServiceProxy.UpdatePerson(lastName, updatedPerson);
-        }
-
-        public void DeletePerson(string lastName)
-        {
-            ServiceProxy.DeletePerson(lastName);
-        }
-
-        public void UpdatePeople(IEnumerable<Person> updatedPeople)
-        {
-            ServiceProxy.UpdatePeople(updatedPeople.ToArray());
+            var address = $"{baseUri}api/people/{id}";
+            string reply = client.DownloadString(address);
+            return JsonConvert.DeserializeObject<Person>(reply);
         }
     }
 }

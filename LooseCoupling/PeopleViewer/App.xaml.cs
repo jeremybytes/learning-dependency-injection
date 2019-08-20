@@ -11,11 +11,16 @@ namespace PeopleViewer
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var wrappedRepository = new ServiceRepository();
-            var repository = new CachingRepository(wrappedRepository);
-            var viewModel = new MainWindowViewModel(repository);
-            Application.Current.MainWindow = new MainWindow(viewModel);
+            ComposeObjects();
             Application.Current.MainWindow.Show();
+        }
+
+        private static void ComposeObjects()
+        {
+            var wrappeRepo = new ServiceRepository();
+            var repository = new CachingRepository(wrappeRepo);
+            var viewModel = new PeopleViewModel(repository);
+            Application.Current.MainWindow = new MainWindow(viewModel);
         }
     }
 }

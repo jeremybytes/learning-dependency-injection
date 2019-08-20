@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PeopleViewer"
         mc:Ignorable="d"
-        Title="Without Dependency Injection" Height="510" Width="760"
+        Title="Without Dependency Injection" Height="530" Width="785"
         WindowStartupLocation="CenterScreen">
     <Border x:Name="LayoutRoot" Padding="5"
             BorderBrush="{StaticResource ApplicationForeground}" BorderThickness="2" 
@@ -26,7 +26,7 @@
             <!-- Refresh List Button -->
             <Button x:Name="RefreshButton" Grid.Column="0" Grid.Row="0" Margin="5"
                             Content="Refresh People"
-                            Command="{Binding RefreshPeopleCommand}"
+                            Click="RefreshButton_Click"
                             Style="{StaticResource GoButtonStyle}" />
 
             <!-- Clear Button -->
@@ -34,8 +34,8 @@
                             Grid.Column="0" Grid.Row="4"
                             FontSize="16" Padding="7,3" Margin="5"
                             Content="Clear Data"
-                            Style="{StaticResource ClearButtonStyle}"
-                            Command="{Binding ClearPeopleCommand}" />
+                            Click="ClearButton_Click"
+                            Style="{StaticResource ClearButtonStyle}" />
 
             <!-- List Box -->
             <ListBox x:Name="PersonListBox"
